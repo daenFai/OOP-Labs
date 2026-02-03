@@ -1,11 +1,11 @@
 public class StarTriangle {
     private int count;
 
-    public StarTriangle(int cnt) {
+    public StarTriangle(int cnt){
         this.count = cnt;
     }
 
-    public String toString() {
+    public String toString(){
         StringBuilder sb = new StringBuilder();
         for(int i = 1; i <= count; i++) {
             for(int j = 0; j < i; j++) {
@@ -16,7 +16,7 @@ public class StarTriangle {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         StarTriangle small = new StarTriangle(3);
         System.out.println(small.toString());
     }

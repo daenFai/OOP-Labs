@@ -4,23 +4,23 @@ public class Student {
     private int studentID;
     private int studentYearOfStudy;
 
-    public Student(String name, int id, int yos) {
+    public Student(String name, int id, int y){
         this.studentName = name;
         this.studentID = id;
-        this.studentYearOfStudy = yos;
+        this.studentYearOfStudy = y;
     }
 
-    public void displayDetails() {
-        System.out.println("Name - " + this.studentName);
-        System.out.println("ID - " + this.studentID);
-        System.out.println("Year of Study - " + this.studentYearOfStudy);
+    public void displayDetails(){
+        System.out.println("Name: " + this.studentName);
+        System.out.println("ID: " + this.studentID);
+        System.out.println("Year of Study: " + this.studentYearOfStudy);
     }
 
-    public void incrementID() {
+    public void incrementID(){
         studentID+=1;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Student stud = new Student("Blabla", 1, 2024);
 
         stud.displayDetails();

@@ -4,13 +4,13 @@ public class Time {
     private int minute;
     private int second;
 
-    public Time(int h, int m, int s) {
+    public Time(int h, int m, int s){
         this.hour = h;
         this.minute = m;
         this.second = s;
     }
 
-    public String Universal() {
+    public String Universal(){
         StringBuilder sb = new StringBuilder();
 
         if(hour < 10) sb.append("0" + hour + ":");
@@ -25,15 +25,16 @@ public class Time {
         return sb.toString();
     }
 
-    public String Standard() {
+    public String Standard(){
 
         boolean next = false;
         StringBuilder sb = new StringBuilder();
 
-        if(hour > 12) {
+        if(hour > 12){
             next = true;
             hour -= 12;
         }
+
         if(hour < 10) sb.append("0" + hour + ":");
         else sb.append(hour + ":");
 
@@ -54,24 +55,24 @@ public class Time {
         int newMinute = t1.minute + t2.minute;
         int newSecond = t1.second + t2.second;
 
-        if (newSecond >= 60) {
+        if (newSecond >= 60){
             newSecond -= 60;
             newMinute++;
         }
 
-        if (newMinute >= 60) {
+        if (newMinute >= 60){
             newMinute -= 60;
             newHour++;
         }
 
-        if (newHour >= 24) {
+        if (newHour >= 24){
             newHour -= 24;
         }
 
         return new Time(newHour, newMinute, newSecond);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Time t = new Time(23, 5, 6);
         System.out.println(t.Universal());
         System.out.println(t.Standard());
