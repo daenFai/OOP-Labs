@@ -17,7 +17,7 @@ public class StarTriangle {
     }
 
     public static void main(String[] args){
-        StarTriangle small = new StarTriangle(3);
+        StarTriangle small = new StarTriangle(20);
         System.out.println(small.toString());
     }
 }

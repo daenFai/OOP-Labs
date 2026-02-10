@@ -73,7 +73,7 @@ public class Time {
     }
 
     public static void main(String[] args){
-        Time t = new Time(23, 5, 6);
+        Time t = new Time(23, 5, 80);
         System.out.println(t.Universal());
         System.out.println(t.Standard());
         Time t2 = new Time(4, 24, 33);
