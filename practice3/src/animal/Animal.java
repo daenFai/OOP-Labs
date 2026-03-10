@@ -2,7 +2,7 @@ package animal;
 
 public class Animal {
 
-    protected String name;
+    private String name;
 
     public Animal() {
         System.out.println("Animal created");
