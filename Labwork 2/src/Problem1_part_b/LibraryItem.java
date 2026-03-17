@@ -33,6 +33,6 @@ public abstract class LibraryItem {
         this.publicationYear = publicationYear;
     }
 
-    @Override
-    public abstract String toString();
+//    @Override
+//    public String toString();
 }

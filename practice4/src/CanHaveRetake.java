@@ -1,0 +1,4 @@
+interface CanHaveRetake {
+    void retakeExam();
+}
+

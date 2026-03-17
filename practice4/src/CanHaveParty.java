@@ -1,0 +1,3 @@
+interface CanHaveParty {
+    void party();
+}

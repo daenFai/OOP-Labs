@@ -1,7 +1,7 @@
 package Problem2;
 
 public abstract class Piece {
-    protected Position position;
+    private Position position;
 
     public Position getPosition() {
         return position;

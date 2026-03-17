@@ -4,7 +4,7 @@ public class PetManagementTester {
     public static void main(String[] args) {
         Person john = new Employee("John", 30, "Engineer");
         Person alice = new PhDStudent("Alice", 26, "Computer Science");
-        Animal murka = new Cat("Murka", 5);
+        Animal murka = new Dog("Murka", 5);
         Animal murkaaa = new Dog("Murkaaaa", 5);
 
         john.assignPet(murka);
