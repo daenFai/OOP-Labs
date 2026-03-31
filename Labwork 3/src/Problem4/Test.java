@@ -14,13 +14,10 @@ public class Test {
         System.out.println(e1);
         System.out.println(m1);
 
-        // equals
         System.out.println(e1.equals(e2));
 
-        // compareTo
         System.out.println(e1.compareTo(e2));
 
-        // sorting
         Vector<Employee> list = new Vector<>();
         list.add(e1);
         list.add(e2);
@@ -29,11 +26,9 @@ public class Test {
         Collections.sort(list);
         System.out.println(list);
 
-        // Comparator
         list.sort(new NameComparator());
         System.out.println(list);
 
-        // clone
         Employee clone = e1.clone();
         System.out.println(clone);
     }
