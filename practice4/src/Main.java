@@ -8,5 +8,6 @@ public class Main {
 
         restaurant.servePizza(cat);
         restaurant.servePizza(student);
+        student.when();
     }
 }

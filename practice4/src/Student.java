@@ -23,4 +23,10 @@ class Student extends Person implements CanHavePizza, CanHaveRetake, CanHavePart
     public void move() {
         System.out.println(name + " is moving");
     }
+
+    @Override
+    public int when() {
+        System.out.println(name + " is whening");
+        return 0;
+    }
 }

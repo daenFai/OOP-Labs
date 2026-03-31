@@ -1,3 +1,3 @@
 interface CanHavePizza {
-    void eatPizza();
+    abstract void eatPizza();
 }
