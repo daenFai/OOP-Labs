@@ -6,7 +6,7 @@ public class Example1
 
 
         numerator   = 5;
-        denominator = 0;  //denominator = 2;
+        denominator = 1;  //denominator = 2;
 
 
 //        try{
@@ -27,6 +27,9 @@ public class Example1
             System.out.println("Divide by 0");
             e.printStackTrace(); //shows you the error
         }
+
+
+        System.out.println("jytyjrhjyrhtrhtyr");
 
 //        ratio = numerator / denominator;
 //        System.out.println("The answer is: "+ratio);
