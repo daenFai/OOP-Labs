@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"academic"},{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"communication"},{"l":"comparators"},{"l":"enums"},{"l":"exceptions"},{"l":"facade"},{"l":"factories"},{"l":"logs"},{"l":"reports"},{"l":"research"},{"l":"services"},{"l":"storage"},{"l":"users"}];updateSearchResults();

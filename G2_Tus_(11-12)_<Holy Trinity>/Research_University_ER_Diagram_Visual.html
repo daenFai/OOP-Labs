@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: transparent; font-family: "Anthropic Sans", sans-serif; }
+.er-wrap { width: 100%; overflow-x: auto; padding: 12px 0; }
+svg text { font-family: "Anthropic Sans", sans-serif; }
+
+.entity-header { fill: #534AB7; }
+.entity-header-text { fill: #fff; font-size: 13px; font-weight: 600; }
+.entity-body { fill: var(--color-background-secondary, #f5f5f3); }
+.entity-border { fill: none; stroke: #7F77DD; stroke-width: 1.2; }
+.field-text { font-size: 11px; fill: var(--color-text-primary, #2c2c2a); }
+.field-type { font-size: 10px; fill: var(--color-text-secondary, #5F5E5A); }
+.field-pk { font-size: 9px; fill: #534AB7; font-weight: 600; }
+
+.entity-header-green { fill: #0F6E56; }
+.entity-border-green { stroke: #1D9E75; }
+.entity-header-blue { fill: #185FA5; }
+.entity-border-blue { stroke: #378ADD; }
+.entity-header-amber { fill: #854F0B; }
+.entity-border-amber { stroke: #BA7517; }
+.entity-header-gray { fill: #5F5E5A; }
+.entity-border-gray { stroke: #888780; }
+
+.rel-line { stroke: #888780; stroke-width: 1.2; fill: none; }
+.rel-label { font-size: 10px; fill: var(--color-text-secondary, #5F5E5A); }
+.inh-line { stroke: #7F77DD; stroke-width: 1.5; fill: none; stroke-dasharray: 6 3; }
+.section-label { font-size: 11px; font-weight: 600; fill: var(--color-text-secondary, #5F5E5A); letter-spacing: 0.5px; }
+</style>
+</head>
+<body>
+<div class="er-wrap">
+<svg width="1400" height="1750" viewBox="0 0 1400 1750" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M1 1L9 5L1 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <marker id="arr-inh" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+    <path d="M1 1L11 6L1 11Z" fill="white" stroke="#7F77DD" stroke-width="1.2"/>
+  </marker>
+  <marker id="arr-inh-rev" viewBox="0 0 12 12" refX="1" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+    <path d="M11 1L1 6L11 11Z" fill="white" stroke="#7F77DD" stroke-width="1.2"/>
+  </marker>
+  <marker id="crow-many" viewBox="0 0 14 14" refX="13" refY="7" markerWidth="10" markerHeight="10" orient="auto">
+    <path d="M1 1L13 7M1 13L13 7M7 1L13 7M7 13L13 7" fill="none" stroke="#888780" stroke-width="1.2"/>
+  </marker>
+  <marker id="crow-one" viewBox="0 0 14 14" refX="13" refY="7" markerWidth="10" markerHeight="10" orient="auto">
+    <line x1="11" y1="1" x2="11" y2="13" stroke="#888780" stroke-width="1.2"/>
+  </marker>
+</defs>
+
+<!-- ============================================================ -->
+<!-- SECTION LABELS -->
+<!-- ============================================================ -->
+<text class="section-label" x="20" y="22">USER HIERARCHY</text>
+<text class="section-label" x="700" y="22">ACADEMIC DOMAIN</text>
+<text class="section-label" x="1080" y="22">RESEARCH DOMAIN</text>
+<text class="section-label" x="20" y="880">COMMUNICATION &amp; LOGS</text>
+<text class="section-label" x="700" y="880">ENUMS</text>
+
+<!-- ============================================================ -->
+<!-- ENTITY HELPER MACRO — drawn manually below -->
+<!-- ============================================================ -->
+
+<!-- ===== USER (abstract) ===== -->
+<g id="User">
+  <rect x="200" y="30" width="200" height="178" rx="6" class="entity-body"/>
+  <rect x="200" y="30" width="200" height="178" rx="6" class="entity-border"/>
+  <rect x="200" y="30" width="200" height="26" rx="6" class="entity-header"/>
+  <rect x="200" y="44" width="200" height="12" class="entity-header"/>
+  <text x="300" y="47" text-anchor="middle" class="entity-header-text">User «abstract»</text>
+  <text x="210" y="73" class="field-text">id</text><text x="350" y="73" text-anchor="end" class="field-pk">PK</text><text x="358" y="73" class="field-type">String</text>
+  <line x1="200" y1="78" x2="400" y2="78" stroke="#7F77DD" stroke-width="0.5"/>
+  <text x="210" y="92" class="field-text">username</text><text x="358" y="92" class="field-type">String</text>
+  <text x="210" y="106" class="field-text">password</text><text x="358" y="106" class="field-type">String</text>
+  <text x="210" y="120" class="field-text">firstName</text><text x="358" y="120" class="field-type">String</text>
+  <text x="210" y="134" class="field-text">lastName</text><text x="358" y="134" class="field-type">String</text>
+  <text x="210" y="148" class="field-text">email</text><text x="358" y="148" class="field-type">String</text>
+  <text x="210" y="162" class="field-text">role</text><text x="358" y="162" class="field-type">UserRole</text>
+  <line x1="200" y1="167" x2="400" y2="167" stroke="#7F77DD" stroke-width="0.5"/>
+  <text x="210" y="180" class="field-text">checkPassword()</text>
+  <text x="210" y="194" class="field-text">getFullName()</text>
+  <text x="210" y="208" class="field-text">compareTo()</text>
+</g>
+
+<!-- ===== EMPLOYEE (abstract) ===== -->
+<g id="Employee">
+  <rect x="50" y="310" width="190" height="104" rx="6" class="entity-body"/>
+  <rect x="50" y="310" width="190" height="104" rx="6" class="entity-border"/>
+  <rect x="50" y="310" width="190" height="26" rx="6" class="entity-header"/>
+  <rect x="50" y="324" width="190" height="12" class="entity-header"/>
+  <text x="145" y="327" text-anchor="middle" class="entity-header-text">Employee «abstract»</text>
+  <text x="60" y="353" class="field-text">salary</text><text x="235" y="353" class="field-type">double</text>
+  <text x="60" y="367" class="field-text">hireDate</text><text x="235" y="367" class="field-type">LocalDate</text>
+  <text x="60" y="381" class="field-text">messages</text><text x="235" y="381" class="field-type">List&lt;Message&gt;</text>
+  <line x1="50" y1="386" x2="240" y2="386" stroke="#7F77DD" stroke-width="0.5"/>
+  <text x="60" y="399" class="field-text">sendMessage()</text>
+  <text x="60" y="413" class="field-text">receiveMessage()</text>
+</g>
+
+<!-- ===== STUDENT ===== -->
+<g id="Student">
+  <rect x="355" y="310" width="200" height="158" rx="6" class="entity-body"/>
+  <rect x="355" y="310" width="200" height="158" rx="6" class="entity-border"/>
+  <rect x="355" y="310" width="200" height="26" rx="6" class="entity-header"/>
+  <rect x="355" y="324" width="200" height="12" class="entity-header"/>
+  <text x="455" y="327" text-anchor="middle" class="entity-header-text">Student</text>
+  <text x="365" y="353" class="field-text">yearOfStudy</text><text x="545" y="353" class="field-type">int</text>
+  <text x="365" y="367" class="field-text">gpa</text><text x="545" y="367" class="field-type">double</text>
+  <text x="365" y="381" class="field-text">totalCredits</text><text x="545" y="381" class="field-type">int</text>
+  <text x="365" y="395" class="field-text">enrolledCourses</text><text x="545" y="395" class="field-type">List</text>
+  <text x="365" y="409" class="field-text">transcript</text><text x="545" y="409" class="field-type">Transcript</text>
+  <text x="365" y="423" class="field-text">researchSupervisor</text><text x="545" y="423" class="field-type">Researcher</text>
+  <line x1="355" y1="428" x2="555" y2="428" stroke="#7F77DD" stroke-width="0.5"/>
+  <text x="365" y="441" class="field-text">registerForCourse()</text>
+  <text x="365" y="455" class="field-text">enrollInCourse()</text>
+  <text x="365" y="469" class="field-text">addMark() / rateTeacher()</text>
+</g>
+
+<!-- ===== TEACHER ===== -->
+<g id="Teacher">
+  <rect x="50" y="520" width="200" height="118" rx="6" class="entity-body"/>
+  <rect x="50" y="520" width="200" height="118" rx="6" class="entity-border"/>
+  <rect x="50" y="520" width="200" height="26" rx="6" class="entity-header"/>
+  <rect x="50" y="534" width="200" height="12" class="entity-header"/>
+  <text x="150" y="537" text-anchor="middle" class="entity-header-text">Teacher</text>
+  <text x="60" y="563" class="field-text">title</text><text x="245" y="563" class="field-type">TeacherTitle</text>
+  <text x="60" y="577" class="field-text">courses</text><text x="245" y="577" class="field-type">List&lt;Course&gt;</text>
+  <text x="60" y="591" class="field-text">ratings</text><text x="245" y="591" class="field-type">List&lt;Integer&gt;</text>
+  <line x1="50" y1="596" x2="250" y2="596" stroke="#7F77DD" stroke-width="0.5"/>
+  <text x="60" y="609" class="field-text">putMark()</text>
+  <text x="60" y="623" class="field-text">addRating() / getAvgRating()</text>
+</g>
+
+<!-- ===== PROFESSOR ===== -->
+<g id="Professor">
+  <rect x="50" y="740" width="200" height="72" rx="6" class="entity-body"/>
+  <rect x="50" y="740" width="200" height="72" rx="6" class="entity-border"/>
+  <rect x="50" y="740" width="200" height="26" rx="6" class="entity-header"/>
+  <rect x="50" y="754" width="200" height="12" class="entity-header"/>
+  <text x="150" y="757" text-anchor="middle" class="entity-header-text">Professor</text>
+  <text x="60" y="783" class="field-text">researchProfile</text><text x="245" y="783" class="field-type">ResearchProfile</text>
+  <line x1="50" y1="788" x2="250" y2="788" stroke="#7F77DD" stroke-width="0.5"/>
+  <text x="60" y="801" class="field-text">«implements Researcher»</text>
+</g>
+
+<!-- ===== ADMIN ===== -->
+<g id="Admin">
+  <rect x="50" y="835" width="200" height="72" rx="6" class="entity-body"/>
+  <rect x="50" y="835" width="200" height="72" rx="6" class="entity-border"/>
+  <rect x="50" y="835" width="200" height="26" rx="6" class="entity-header"/>
+  <rect x="50" y="849" width="200" height="12" class="entity-header"/>
+  <text x="150" y="852" text-anchor="middle" class="entity-header-text">Admin</text>
+  <line x1="50" y1="878" x2="250" y2="878" stroke="#7F77DD" stroke-width="0.5"/>
+  <text x="60" y="891" class="field-text">addUser() / removeUser()</text>
+  <text x="60" y="905" class="field-text">viewActionLogs()</text>
+</g>
+
+<!-- ===== MANAGER ===== -->
+<g id="Manager">
+  <rect x="270" y="520" width="200" height="118" rx="6" class="entity-body"/>
+  <rect x="270" y="520" width="200" height="118" rx="6" class="entity-border"/>
+  <rect x="270" y="520" width="200" height="26" rx="6" class="entity-header"/>
+  <rect x="270" y="534" width="200" height="12" class="entity-header"/>
+  <text x="370" y="537" text-anchor="middle" class="entity-header-text">Manager</text>
+  <text x="280" y="563" class="field-text">managerType</text><text x="465" y="563" class="field-type">ManagerType</text>
+  <line x1="270" y1="568" x2="470" y2="568" stroke="#7F77DD" stroke-width="0.5"/>
+  <text x="280" y="581" class="field-text">approveRegistration()</text>
+  <text x="280" y="595" class="field-text">rejectRegistration()</text>
+  <text x="280" y="609" class="field-text">assignCourseToTeacher()</text>
+  <text x="280" y="623" class="field-text">createStatisticalReport()</text>
+</g>
+
+<!-- ===== RESEARCH EMPLOYEE ===== -->
+<g id="ResearchEmployee">
+  <rect x="270" y="660" width="200" height="72" rx="6" class="entity-body"/>
+  <rect x="270" y="660" width="200" height="72" rx="6" class="entity-border"/>
+  <rect x="270" y="660" width="200" height="26" rx="6" class="entity-header"/>
+  <rect x="270" y="674" width="200" height="12" class="entity-header"/>
+  <text x="370" y="677" text-anchor="middle" class="entity-header-text">ResearchEmployee</text>
+  <text x="280" y="703" class="field-text">researchProfile</text><text x="465" y="703" class="field-type">ResearchProfile</text>
+  <line x1="270" y1="708" x2="470" y2="708" stroke="#7F77DD" stroke-width="0.5"/>
+  <text x="280" y="721" class="field-text">«implements Researcher»</text>
+</g>
+
+<!-- ===== RESEARCH STUDENT ===== -->
+<g id="ResearchStudent">
+  <rect x="355" y="520" width="200" height="72" rx="6" class="entity-body"/>
+  <!-- reuse space: actually placed below Student -->
+  <rect x="355" y="510" width="200" height="0" rx="6"/>
+</g>
+<!-- ResearchStudent placed beside Student -->
+<g id="ResearchStudentEnt">
+  <rect x="575" y="310" width="200" height="86" rx="6" class="entity-body"/>
+  <rect x="575" y="310" width="200" height="86" rx="6" class="entity-border"/>
+  <rect x="575" y="310" width="200" height="26" rx="6" class="entity-header"/>
+  <rect x="575" y="324" width="200" height="12" class="entity-header"/>
+  <text x="675" y="327" text-anchor="middle" class="entity-header-text">ResearchStudent</text>
+  <text x="585" y="353" class="field-text">researchProfile</text><text x="770" y="353" class="field-type">ResearchProfile</text>
+  <line x1="575" y1="358" x2="775" y2="358" stroke="#7F77DD" stroke-width="0.5"/>
+  <text x="585" y="371" class="field-text">«extends Student»</text>
+  <text x="585" y="385" class="field-text">«implements Researcher»</text>
+</g>
+
+<!-- ============================================================ -->
+<!-- ACADEMIC DOMAIN -->
+<!-- ============================================================ -->
+
+<!-- COURSE -->
+<g id="Course">
+  <rect x="720" y="30" width="210" height="172" rx="6" class="entity-body"/>
+  <rect x="720" y="30" width="210" height="172" rx="6" class="entity-border entity-border-green"/>
+  <rect x="720" y="30" width="210" height="26" rx="6" class="entity-header entity-header-green"/>
+  <rect x="720" y="44" width="210" height="12" class="entity-header entity-header-green"/>
+  <text x="825" y="47" text-anchor="middle" class="entity-header-text">Course</text>
+  <text x="730" y="73" class="field-text">code</text><text x="880" y="73" text-anchor="end" class="field-pk">PK</text><text x="890" y="73" class="field-type">String</text>
+  <line x1="720" y1="78" x2="930" y2="78" stroke="#1D9E75" stroke-width="0.5"/>
+  <text x="730" y="92" class="field-text">courseName</text><text x="890" y="92" class="field-type">String</text>
+  <text x="730" y="106" class="field-text">credits</text><text x="890" y="106" class="field-type">int</text>
+  <text x="730" y="120" class="field-text">major</text><text x="890" y="120" class="field-type">String</text>
+  <text x="730" y="134" class="field-text">intendedYear</text><text x="890" y="134" class="field-type">int</text>
+  <text x="730" y="148" class="field-text">status</text><text x="890" y="148" class="field-type">CourseStatus</text>
+  <text x="730" y="162" class="field-text">instructors</text><text x="890" y="162" class="field-type">List&lt;Teacher&gt;</text>
+  <text x="730" y="176" class="field-text">students</text><text x="890" y="176" class="field-type">List&lt;Student&gt;</text>
+  <text x="730" y="190" class="field-text">lessons</text><text x="890" y="190" class="field-type">List&lt;Lesson&gt;</text>
+</g>
+
+<!-- LESSON -->
+<g id="Lesson">
+  <rect x="720" y="240" width="210" height="118" rx="6" class="entity-body"/>
+  <rect x="720" y="240" width="210" height="118" rx="6" class="entity-border entity-border-green"/>
+  <rect x="720" y="240" width="210" height="26" rx="6" class="entity-header entity-header-green"/>
+  <rect x="720" y="254" width="210" height="12" class="entity-header entity-header-green"/>
+  <text x="825" y="257" text-anchor="middle" class="entity-header-text">Lesson</text>
+  <text x="730" y="283" class="field-text">topic</text><text x="890" y="283" class="field-type">String</text>
+  <text x="730" y="297" class="field-text">dateTime</text><text x="890" y="297" class="field-type">LocalDateTime</text>
+  <text x="730" y="311" class="field-text">type</text><text x="890" y="311" class="field-type">LessonType</text>
+  <text x="730" y="325" class="field-text">room</text><text x="890" y="325" class="field-type">String</text>
+  <text x="730" y="339" class="field-text">instructor</text><text x="890" y="339" class="field-type">Teacher</text>
+</g>
+
+<!-- MARK -->
+<g id="Mark">
+  <rect x="720" y="380" width="210" height="132" rx="6" class="entity-body"/>
+  <rect x="720" y="380" width="210" height="132" rx="6" class="entity-border entity-border-green"/>
+  <rect x="720" y="380" width="210" height="26" rx="6" class="entity-header entity-header-green"/>
+  <rect x="720" y="394" width="210" height="12" class="entity-header entity-header-green"/>
+  <text x="825" y="397" text-anchor="middle" class="entity-header-text">Mark</text>
+  <text x="730" y="423" class="field-text">course</text><text x="890" y="423" class="field-type">Course</text>
+  <text x="730" y="437" class="field-text">firstAttestation</text><text x="890" y="437" class="field-type">double (0-30)</text>
+  <text x="730" y="451" class="field-text">secondAttestation</text><text x="890" y="451" class="field-type">double (0-30)</text>
+  <text x="730" y="465" class="field-text">finalExam</text><text x="890" y="465" class="field-type">double (0-40)</text>
+  <line x1="720" y1="470" x2="930" y2="470" stroke="#1D9E75" stroke-width="0.5"/>
+  <text x="730" y="483" class="field-text">getTotal()</text>
+  <text x="730" y="497" class="field-text">getLetterGrade()</text>
+  <text x="730" y="511" class="field-text">getGpaValue()</text>
+</g>
+
+<!-- TRANSCRIPT -->
+<g id="Transcript">
+  <rect x="720" y="530" width="210" height="86" rx="6" class="entity-body"/>
+  <rect x="720" y="530" width="210" height="86" rx="6" class="entity-border entity-border-green"/>
+  <rect x="720" y="530" width="210" height="26" rx="6" class="entity-header entity-header-green"/>
+  <rect x="720" y="544" width="210" height="12" class="entity-header entity-header-green"/>
+  <text x="825" y="547" text-anchor="middle" class="entity-header-text">Transcript</text>
+  <text x="730" y="573" class="field-text">student</text><text x="890" y="573" class="field-type">Student</text>
+  <text x="730" y="587" class="field-text">marks</text><text x="890" y="587" class="field-type">List&lt;Mark&gt;</text>
+  <line x1="720" y1="592" x2="930" y2="592" stroke="#1D9E75" stroke-width="0.5"/>
+  <text x="730" y="605" class="field-text">calculateGpa() / printTranscript()</text>
+</g>
+
+<!-- REGISTRATION REQUEST -->
+<g id="RegistrationRequest">
+  <rect x="720" y="635" width="210" height="118" rx="6" class="entity-body"/>
+  <rect x="720" y="635" width="210" height="118" rx="6" class="entity-border entity-border-green"/>
+  <rect x="720" y="635" width="210" height="26" rx="6" class="entity-header entity-header-green"/>
+  <rect x="720" y="649" width="210" height="12" class="entity-header entity-header-green"/>
+  <text x="825" y="652" text-anchor="middle" class="entity-header-text">RegistrationRequest</text>
+  <text x="730" y="678" class="field-text">requestId</text><text x="890" y="678" text-anchor="end" class="field-pk">PK</text><text x="900" y="678" class="field-type">UUID</text>
+  <line x1="720" y1="683" x2="930" y2="683" stroke="#1D9E75" stroke-width="0.5"/>
+  <text x="730" y="697" class="field-text">createdAt</text><text x="900" y="697" class="field-type">LocalDateTime</text>
+  <text x="730" y="711" class="field-text">status</text><text x="900" y="711" class="field-type">RegistrationStatus</text>
+  <text x="730" y="725" class="field-text">student</text><text x="900" y="725" class="field-type">Student</text>
+  <text x="730" y="739" class="field-text">course</text><text x="900" y="739" class="field-type">Course</text>
+  <line x1="720" y1="744" x2="930" y2="744" stroke="#1D9E75" stroke-width="0.5"/>
+  <text x="730" y="757" class="field-text">approve() / reject()</text>
+</g>
+
+<!-- ============================================================ -->
+<!-- RESEARCH DOMAIN -->
+<!-- ============================================================ -->
+
+<!-- RESEARCH PROFILE -->
+<g id="ResearchProfile">
+  <rect x="1080" y="30" width="220" height="118" rx="6" class="entity-body"/>
+  <rect x="1080" y="30" width="220" height="118" rx="6" class="entity-border entity-border-blue"/>
+  <rect x="1080" y="30" width="220" height="26" rx="6" class="entity-header entity-header-blue"/>
+  <rect x="1080" y="44" width="220" height="12" class="entity-header entity-header-blue"/>
+  <text x="1190" y="47" text-anchor="middle" class="entity-header-text">ResearchProfile</text>
+  <text x="1090" y="73" class="field-text">hIndex</text><text x="1295" y="73" class="field-type">int</text>
+  <text x="1090" y="87" class="field-text">school</text><text x="1295" y="87" class="field-type">School</text>
+  <text x="1090" y="101" class="field-text">papers</text><text x="1295" y="101" class="field-type">List&lt;ResearchPaper&gt;</text>
+  <text x="1090" y="115" class="field-text">projects</text><text x="1295" y="115" class="field-type">List&lt;ResearchProject&gt;</text>
+  <line x1="1080" y1="120" x2="1300" y2="120" stroke="#378ADD" stroke-width="0.5"/>
+  <text x="1090" y="133" class="field-text">getTotalCitations()</text>
+</g>
+
+<!-- RESEARCH PAPER -->
+<g id="ResearchPaper">
+  <rect x="1080" y="175" width="220" height="158" rx="6" class="entity-body"/>
+  <rect x="1080" y="175" width="220" height="158" rx="6" class="entity-border entity-border-blue"/>
+  <rect x="1080" y="175" width="220" height="26" rx="6" class="entity-header entity-header-blue"/>
+  <rect x="1080" y="189" width="220" height="12" class="entity-header entity-header-blue"/>
+  <text x="1190" y="192" text-anchor="middle" class="entity-header-text">ResearchPaper</text>
+  <text x="1090" y="218" class="field-text">doi</text><text x="1255" y="218" text-anchor="end" class="field-pk">PK</text><text x="1265" y="218" class="field-type">String</text>
+  <line x1="1080" y1="223" x2="1300" y2="223" stroke="#378ADD" stroke-width="0.5"/>
+  <text x="1090" y="237" class="field-text">title</text><text x="1265" y="237" class="field-type">String</text>
+  <text x="1090" y="251" class="field-text">journal</text><text x="1265" y="251" class="field-type">String</text>
+  <text x="1090" y="265" class="field-text">pages</text><text x="1265" y="265" class="field-type">int</text>
+  <text x="1090" y="279" class="field-text">publicationDate</text><text x="1265" y="279" class="field-type">LocalDate</text>
+  <text x="1090" y="293" class="field-text">citations</text><text x="1265" y="293" class="field-type">int</text>
+  <text x="1090" y="307" class="field-text">authors</text><text x="1265" y="307" class="field-type">List&lt;Researcher&gt;</text>
+  <line x1="1080" y1="312" x2="1300" y2="312" stroke="#378ADD" stroke-width="0.5"/>
+  <text x="1090" y="325" class="field-text">addAuthor()</text>
+</g>
+
+<!-- RESEARCH PROJECT -->
+<g id="ResearchProject">
+  <rect x="1080" y="355" width="220" height="100" rx="6" class="entity-body"/>
+  <rect x="1080" y="355" width="220" height="100" rx="6" class="entity-border entity-border-blue"/>
+  <rect x="1080" y="355" width="220" height="26" rx="6" class="entity-header entity-header-blue"/>
+  <rect x="1080" y="369" width="220" height="12" class="entity-header entity-header-blue"/>
+  <text x="1190" y="372" text-anchor="middle" class="entity-header-text">ResearchProject</text>
+  <text x="1090" y="398" class="field-text">topic</text><text x="1295" y="398" class="field-type">String</text>
+  <text x="1090" y="412" class="field-text">participants</text><text x="1295" y="412" class="field-type">List&lt;Researcher&gt;</text>
+  <text x="1090" y="426" class="field-text">publishedPapers</text><text x="1295" y="426" class="field-type">List&lt;ResearchPaper&gt;</text>
+  <line x1="1080" y1="431" x2="1300" y2="431" stroke="#378ADD" stroke-width="0.5"/>
+  <text x="1090" y="444" class="field-text">addParticipant() / addPaper()</text>
+</g>
+
+<!-- Researcher interface note -->
+<rect x="1080" y="475" width="220" height="56" rx="6" fill="none" stroke="#378ADD" stroke-width="1" stroke-dasharray="5 3"/>
+<text x="1190" y="495" text-anchor="middle" class="field-text" style="font-weight:600">«interface» Researcher</text>
+<text x="1090" y="511" class="field-text">getResearchProfile()</text>
+<text x="1090" y="525" class="field-text">printPapers(comparator)</text>
+<text x="1185" y="542" text-anchor="middle" class="field-type">implemented by: Professor,</text>
+<text x="1185" y="555" text-anchor="middle" class="field-type">ResearchEmployee, ResearchStudent</text>
+
+<!-- ============================================================ -->
+<!-- COMMUNICATION & LOGS -->
+<!-- ============================================================ -->
+
+<!-- MESSAGE -->
+<g id="Message">
+  <rect x="20" y="895" width="200" height="118" rx="6" class="entity-body"/>
+  <rect x="20" y="895" width="200" height="118" rx="6" class="entity-border entity-border-amber"/>
+  <rect x="20" y="895" width="200" height="26" rx="6" class="entity-header entity-header-amber"/>
+  <rect x="20" y="909" width="200" height="12" class="entity-header entity-header-amber"/>
+  <text x="120" y="912" text-anchor="middle" class="entity-header-text">Message</text>
+  <text x="30" y="938" class="field-text">text</text><text x="215" y="938" class="field-type">String</text>
+  <text x="30" y="952" class="field-text">sentAt</text><text x="215" y="952" class="field-type">LocalDateTime</text>
+  <text x="30" y="966" class="field-text">sender</text><text x="215" y="966" class="field-type">Employee</text>
+  <text x="30" y="980" class="field-text">receiver</text><text x="215" y="980" class="field-type">Employee</text>
+  <line x1="20" y1="985" x2="220" y2="985" stroke="#BA7517" stroke-width="0.5"/>
+  <text x="30" y="998" class="field-text">getSender() / getReceiver()</text>
+</g>
+
+<!-- NEWS -->
+<g id="News">
+  <rect x="240" y="895" width="200" height="100" rx="6" class="entity-body"/>
+  <rect x="240" y="895" width="200" height="100" rx="6" class="entity-border entity-border-amber"/>
+  <rect x="240" y="895" width="200" height="26" rx="6" class="entity-header entity-header-amber"/>
+  <rect x="240" y="909" width="200" height="12" class="entity-header entity-header-amber"/>
+  <text x="340" y="912" text-anchor="middle" class="entity-header-text">News</text>
+  <text x="250" y="938" class="field-text">title</text><text x="435" y="938" class="field-type">String</text>
+  <text x="250" y="952" class="field-text">content</text><text x="435" y="952" class="field-type">String</text>
+  <text x="250" y="966" class="field-text">createdAt</text><text x="435" y="966" class="field-type">LocalDateTime</text>
+</g>
+
+<!-- REPORT -->
+<g id="Report">
+  <rect x="460" y="895" width="200" height="100" rx="6" class="entity-body"/>
+  <rect x="460" y="895" width="200" height="100" rx="6" class="entity-border entity-border-amber"/>
+  <rect x="460" y="895" width="200" height="26" rx="6" class="entity-header entity-header-amber"/>
+  <rect x="460" y="909" width="200" height="12" class="entity-header entity-header-amber"/>
+  <text x="560" y="912" text-anchor="middle" class="entity-header-text">Report</text>
+  <text x="470" y="938" class="field-text">title</text><text x="655" y="938" class="field-type">String</text>
+  <text x="470" y="952" class="field-text">content</text><text x="655" y="952" class="field-type">String</text>
+  <text x="470" y="966" class="field-text">generatedAt</text><text x="655" y="966" class="field-type">LocalDateTime</text>
+</g>
+
+<!-- USER ACTION LOG -->
+<g id="UserActionLog">
+  <rect x="20" y="1030" width="200" height="100" rx="6" class="entity-body"/>
+  <rect x="20" y="1030" width="200" height="100" rx="6" class="entity-border entity-border-amber"/>
+  <rect x="20" y="1030" width="200" height="26" rx="6" class="entity-header entity-header-amber"/>
+  <rect x="20" y="1044" width="200" height="12" class="entity-header entity-header-amber"/>
+  <text x="120" y="1047" text-anchor="middle" class="entity-header-text">UserActionLog</text>
+  <text x="30" y="1073" class="field-text">action</text><text x="215" y="1073" class="field-type">String</text>
+  <text x="30" y="1087" class="field-text">createdAt</text><text x="215" y="1087" class="field-type">LocalDateTime</text>
+  <text x="30" y="1101" class="field-text">user</text><text x="215" y="1101" class="field-type">User</text>
+  <line x1="20" y1="1106" x2="220" y2="1106" stroke="#BA7517" stroke-width="0.5"/>
+  <text x="30" y="1119" class="field-text">toString()</text>
+</g>
+
+<!-- DATA STORE -->
+<g id="DataStore">
+  <rect x="240" y="1030" width="220" height="172" rx="6" class="entity-body"/>
+  <rect x="240" y="1030" width="220" height="172" rx="6" class="entity-border entity-border-amber"/>
+  <rect x="240" y="1030" width="220" height="26" rx="6" class="entity-header entity-header-amber"/>
+  <rect x="240" y="1044" width="220" height="12" class="entity-header entity-header-amber"/>
+  <text x="350" y="1047" text-anchor="middle" class="entity-header-text">DataStore «Singleton»</text>
+  <text x="250" y="1073" class="field-text">users</text><text x="455" y="1073" class="field-type">List&lt;User&gt;</text>
+  <text x="250" y="1087" class="field-text">courses</text><text x="455" y="1087" class="field-type">List&lt;Course&gt;</text>
+  <text x="250" y="1101" class="field-text">researchPapers</text><text x="455" y="1101" class="field-type">List&lt;ResearchPaper&gt;</text>
+  <text x="250" y="1115" class="field-text">researchProjects</text><text x="455" y="1115" class="field-type">List&lt;ResearchProject&gt;</text>
+  <text x="250" y="1129" class="field-text">registrationRequests</text><text x="455" y="1129" class="field-type">List</text>
+  <text x="250" y="1143" class="field-text">news</text><text x="455" y="1143" class="field-type">List&lt;News&gt;</text>
+  <text x="250" y="1157" class="field-text">logs</text><text x="455" y="1157" class="field-type">List&lt;UserActionLog&gt;</text>
+  <line x1="240" y1="1162" x2="460" y2="1162" stroke="#BA7517" stroke-width="0.5"/>
+  <text x="250" y="1175" class="field-text">getInstance() — static</text>
+  <text x="250" y="1189" class="field-text">save() / load()</text>
+  <text x="250" y="1203" class="field-text">clear()</text>
+</g>
+
+<!-- ============================================================ -->
+<!-- ENUMS -->
+<!-- ============================================================ -->
+
+<!-- helper to draw small enums -->
+<g id="enums">
+  <!-- UserRole -->
+  <rect x="700" y="895" width="155" height="102" rx="6" class="entity-body"/>
+  <rect x="700" y="895" width="155" height="102" rx="6" class="entity-border entity-border-gray"/>
+  <rect x="700" y="895" width="155" height="26" rx="6" class="entity-header entity-header-gray"/>
+  <rect x="700" y="909" width="155" height="12" class="entity-header entity-header-gray"/>
+  <text x="777" y="912" text-anchor="middle" class="entity-header-text">«enum» UserRole</text>
+  <text x="710" y="936" class="field-text">STUDENT</text>
+  <text x="710" y="950" class="field-text">TEACHER</text>
+  <text x="710" y="964" class="field-text">MANAGER</text>
+  <text x="710" y="978" class="field-text">ADMIN</text>
+  <text x="710" y="992" class="field-text">RESEARCHER</text>
+
+  <!-- CourseStatus -->
+  <rect x="870" y="895" width="175" height="88" rx="6" class="entity-body"/>
+  <rect x="870" y="895" width="175" height="88" rx="6" class="entity-border entity-border-gray"/>
+  <rect x="870" y="895" width="175" height="26" rx="6" class="entity-header entity-header-gray"/>
+  <rect x="870" y="909" width="175" height="12" class="entity-header entity-header-gray"/>
+  <text x="957" y="912" text-anchor="middle" class="entity-header-text">«enum» CourseStatus</text>
+  <text x="880" y="936" class="field-text">OPEN_FOR_REGISTRATION</text>
+  <text x="880" y="950" class="field-text">CLOSED</text>
+  <text x="880" y="964" class="field-text">ARCHIVED</text>
+
+  <!-- RegistrationStatus -->
+  <rect x="700" y="1010" width="175" height="88" rx="6" class="entity-body"/>
+  <rect x="700" y="1010" width="175" height="88" rx="6" class="entity-border entity-border-gray"/>
+  <rect x="700" y="1010" width="175" height="26" rx="6" class="entity-header entity-header-gray"/>
+  <rect x="700" y="1024" width="175" height="12" class="entity-header entity-header-gray"/>
+  <text x="787" y="1027" text-anchor="middle" class="entity-header-text">«enum» RegistrationStatus</text>
+  <text x="710" y="1051" class="field-text">PENDING</text>
+  <text x="710" y="1065" class="field-text">APPROVED</text>
+  <text x="710" y="1079" class="field-text">REJECTED</text>
+
+  <!-- LessonType -->
+  <rect x="900" y="1010" width="155" height="74" rx="6" class="entity-body"/>
+  <rect x="900" y="1010" width="155" height="74" rx="6" class="entity-border entity-border-gray"/>
+  <rect x="900" y="1010" width="155" height="26" rx="6" class="entity-header entity-header-gray"/>
+  <rect x="900" y="1024" width="155" height="12" class="entity-header entity-header-gray"/>
+  <text x="977" y="1027" text-anchor="middle" class="entity-header-text">«enum» LessonType</text>
+  <text x="910" y="1051" class="field-text">LECTURE</text>
+  <text x="910" y="1065" class="field-text">PRACTICE</text>
+
+  <!-- TeacherTitle -->
+  <rect x="700" y="1115" width="165" height="102" rx="6" class="entity-body"/>
+  <rect x="700" y="1115" width="165" height="102" rx="6" class="entity-border entity-border-gray"/>
+  <rect x="700" y="1115" width="165" height="26" rx="6" class="entity-header entity-header-gray"/>
+  <rect x="700" y="1129" width="165" height="12" class="entity-header entity-header-gray"/>
+  <text x="782" y="1132" text-anchor="middle" class="entity-header-text">«enum» TeacherTitle</text>
+  <text x="710" y="1156" class="field-text">TUTOR</text>
+  <text x="710" y="1170" class="field-text">LECTOR</text>
+  <text x="710" y="1184" class="field-text">SENIOR_LECTOR</text>
+  <text x="710" y="1198" class="field-text">PROFESSOR</text>
+
+  <!-- ManagerType -->
+  <rect x="880" y="1100" width="155" height="74" rx="6" class="entity-body"/>
+  <rect x="880" y="1100" width="155" height="74" rx="6" class="entity-border entity-border-gray"/>
+  <rect x="880" y="1100" width="155" height="26" rx="6" class="entity-header entity-header-gray"/>
+  <rect x="880" y="1114" width="155" height="12" class="entity-header entity-header-gray"/>
+  <text x="957" y="1117" text-anchor="middle" class="entity-header-text">«enum» ManagerType</text>
+  <text x="890" y="1141" class="field-text">OR</text>
+  <text x="890" y="1155" class="field-text">DEPARTMENT</text>
+
+  <!-- School -->
+  <rect x="700" y="1235" width="155" height="116" rx="6" class="entity-body"/>
+  <rect x="700" y="1235" width="155" height="116" rx="6" class="entity-border entity-border-gray"/>
+  <rect x="700" y="1235" width="155" height="26" rx="6" class="entity-header entity-header-gray"/>
+  <rect x="700" y="1249" width="155" height="12" class="entity-header entity-header-gray"/>
+  <text x="777" y="1252" text-anchor="middle" class="entity-header-text">«enum» School</text>
+  <text x="710" y="1276" class="field-text">SITE</text>
+  <text x="710" y="1290" class="field-text">BS</text>
+  <text x="710" y="1304" class="field-text">ISE</text>
+  <text x="710" y="1318" class="field-text">KMA</text>
+  <text x="710" y="1332" class="field-text">SCE</text>
+</g>
+
+<!-- ============================================================ -->
+<!-- INHERITANCE LINES (dashed purple, open triangle) -->
+<!-- ============================================================ -->
+<!-- User -> Employee -->
+<path d="M300 208 L300 250 L145 250 L145 310" class="inh-line" marker-end="url(#arr-inh)"/>
+<!-- User -> Student -->
+<path d="M300 208 L300 250 L455 250 L455 310" class="inh-line" marker-end="url(#arr-inh)"/>
+<!-- Employee -> Teacher -->
+<path d="M145 414 L145 520" class="inh-line" marker-end="url(#arr-inh)"/>
+<!-- Employee -> Manager -->
+<path d="M240 362 L370 362 L370 520" class="inh-line" marker-end="url(#arr-inh)"/>
+<!-- Employee -> ResearchEmployee -->
+<path d="M240 380 L260 380 L260 660 L270 660" class="inh-line" marker-end="url(#arr-inh)"/>
+<!-- Employee -> Admin -->
+<path d="M50 362 L30 362 L30 835 L50 835" class="inh-line" marker-end="url(#arr-inh)"/>
+<!-- Teacher -> Professor -->
+<path d="M150 638 L150 740" class="inh-line" marker-end="url(#arr-inh)"/>
+<!-- Student -> ResearchStudent -->
+<path d="M555 353 L575 353" class="inh-line" marker-end="url(#arr-inh)"/>
+
+<!-- ============================================================ -->
+<!-- RELATIONSHIP LINES -->
+<!-- ============================================================ -->
+
+<!-- Student 1--1 Transcript -->
+<line x1="555" y1="409" x2="720" y2="573" class="rel-line" marker-end="url(#arr)"/>
+<text x="630" y="488" class="rel-label">has 1</text>
+
+<!-- Student M--M Course (enrolled) -->
+<line x1="555" y1="358" x2="720" y2="120" class="rel-line" marker-end="url(#arr)"/>
+<text x="620" y="235" class="rel-label">enrolls in</text>
+
+<!-- Teacher M--M Course (instructs) -->
+<line x1="250" y1="570" x2="720" y2="100" class="rel-line" marker-end="url(#arr)"/>
+<text x="440" y="310" class="rel-label">instructs</text>
+
+<!-- Course 1--M Lesson -->
+<line x1="825" y1="202" x2="825" y2="240" class="rel-line" marker-end="url(#arr)"/>
+<text x="835" y="225" class="rel-label">1..*</text>
+
+<!-- Lesson M--1 Teacher (instructor) -->
+<line x1="720" y1="339" x2="250" y2="600" class="rel-line" marker-end="url(#arr)"/>
+<text x="500" y="453" class="rel-label">taught by</text>
+
+<!-- Transcript 1--M Mark -->
+<line x1="825" y1="616" x2="825" y2="635" class="rel-line"/>
+<line x1="825" y1="530" x2="825" y2="512" class="rel-line" marker-end="url(#arr)"/>
+<text x="835" y="522" class="rel-label">contains</text>
+
+<!-- Mark M--1 Course -->
+<line x1="720" y1="443" x2="930" y2="120" class="rel-line"/>
+<text x="850" y="270" class="rel-label">for</text>
+
+<!-- RegistrationRequest M--1 Student -->
+<line x1="720" y1="725" x2="555" y2="400" class="rel-line" marker-end="url(#arr)"/>
+<text x="620" y="580" class="rel-label">from</text>
+
+<!-- RegistrationRequest M--1 Course -->
+<line x1="825" y1="635" x2="825" y2="202" class="rel-line" marker-end="url(#arr)"/>
+
+<!-- Student optional--1 Researcher (supervisor) -->
+<path d="M455 423 Q455 460 580 460 Q700 460 700 405" class="rel-line" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+<text x="570" y="452" class="rel-label">supervisor (opt)</text>
+
+<!-- Professor -> ResearchProfile -->
+<line x1="250" y1="783" x2="1080" y2="80" class="rel-line" stroke="#378ADD" marker-end="url(#arr)"/>
+<text x="660" y="380" class="rel-label" fill="#185FA5">has profile</text>
+
+<!-- ResearchEmployee -> ResearchProfile -->
+<line x1="470" y1="696" x2="1080" y2="96" class="rel-line" stroke="#378ADD" marker-end="url(#arr)"/>
+
+<!-- ResearchStudent -> ResearchProfile -->
+<line x1="775" y1="353" x2="1080" y2="70" class="rel-line" stroke="#378ADD" marker-end="url(#arr)"/>
+
+<!-- ResearchProfile 1--M ResearchPaper -->
+<line x1="1190" y1="148" x2="1190" y2="175" class="rel-line" stroke="#378ADD" marker-end="url(#arr)"/>
+<text x="1205" y="165" class="rel-label" fill="#185FA5">1..*</text>
+
+<!-- ResearchProfile 1--M ResearchProject -->
+<line x1="1300" y1="90" x2="1340" y2="90" x2="1340" y2="405" class="rel-line" stroke="#378ADD"/>
+<path d="M1300 90 L1340 90 L1340 405 L1300 405" class="rel-line" stroke="#378ADD" marker-end="url(#arr)"/>
+<text x="1345" y="250" class="rel-label" fill="#185FA5">participates</text>
+
+<!-- ResearchProject M--M ResearchPaper -->
+<line x1="1190" y1="355" x2="1190" y2="333" class="rel-line" stroke="#378ADD" marker-end="url(#arr)"/>
+<text x="1205" y="348" class="rel-label" fill="#185FA5">produces</text>
+
+<!-- Message M--1 Employee (sender) -->
+<line x1="220" y1="966" x2="240" y2="966 " class="rel-line"/>
+<path d="M220 952 Q660 800 145 638" class="rel-line" marker-end="url(#arr)"/>
+<text x="180" y="780" class="rel-label">sender/recv</text>
+
+<!-- UserActionLog M--1 User -->
+<path d="M220 1087 Q560 1087 560 460 Q560 119 400 119" class="rel-line" marker-end="url(#arr)"/>
+<text x="490" y="790" class="rel-label">logged for</text>
+
+<!-- Enum connections (dotted, light) -->
+<line x1="300" y1="162" x2="700" y2="940" stroke="#888780" stroke-width="0.7" stroke-dasharray="3 3"/>
+<text x="490" y="560" class="rel-label">has role</text>
+
+<line x1="825" y1="148" x2="870" y2="920" stroke="#888780" stroke-width="0.7" stroke-dasharray="3 3"/>
+<text x="850" y="810" class="rel-label">status</text>
+
+<line x1="825" y1="311" x2="900" y2="1037" stroke="#888780" stroke-width="0.7" stroke-dasharray="3 3"/>
+
+<line x1="150" y1="563" x2="700" y2="1150" stroke="#888780" stroke-width="0.7" stroke-dasharray="3 3"/>
+
+<line x1="370" y1="563" x2="880" y2="1127" stroke="#888780" stroke-width="0.7" stroke-dasharray="3 3"/>
+
+<line x1="1190" y1="87" x2="700" y2="1280" stroke="#888780" stroke-width="0.7" stroke-dasharray="3 3"/>
+
+<!-- ============================================================ -->
+<!-- LEGEND -->
+<!-- ============================================================ -->
+<rect x="20" y="1700" width="640" height="38" rx="6" fill="none" stroke="#888780" stroke-width="0.5"/>
+<rect x="30" y="1712" width="14" height="14" rx="2" fill="#534AB7"/>
+<text x="50" y="1723" class="field-type">User hierarchy</text>
+<rect x="160" y="1712" width="14" height="14" rx="2" fill="#0F6E56"/>
+<text x="180" y="1723" class="field-type">Academic</text>
+<rect x="270" y="1712" width="14" height="14" rx="2" fill="#185FA5"/>
+<text x="290" y="1723" class="field-type">Research</text>
+<rect x="370" y="1712" width="14" height="14" rx="2" fill="#854F0B"/>
+<text x="390" y="1723" class="field-type">Communication/Logs</text>
+<rect x="540" y="1712" width="14" height="14" rx="2" fill="#5F5E5A"/>
+<text x="560" y="1723" class="field-type">Enums</text>
+<line x1="30" y1="1732" x2="80" y2="1732" stroke="#7F77DD" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="88" y="1736" class="field-type">inheritance</text>
+<line x1="170" y1="1732" x2="220" y2="1732" stroke="#888780" stroke-width="1.2"/>
+<text x="228" y="1736" class="field-type">association/aggregation</text>
+</svg>
+</div>
+</body>
+</html>
